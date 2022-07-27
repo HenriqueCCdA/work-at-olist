@@ -21,3 +21,13 @@ def book(authors):
     book = Book.objects.create(name='Book 1', edition=1, publication_year='2000')
     book.authors.set(authors)
     return book
+
+
+@pytest.fixture
+def books(authors):
+    list_books = [
+        Book(name='Book 1', edition=1, publication_year='2000'),
+        Book(name='Book 2', edition=2, publication_year='1999')
+    ]
+    Book.objects.bulk_create(list_books)
+    return Book.objects.all()

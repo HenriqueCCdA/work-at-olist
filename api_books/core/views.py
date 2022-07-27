@@ -44,8 +44,16 @@ def authors(request):
     return JsonResponse({})
 
 
-def books(request):
+def book_list(request):
 
     data = {'result': [b.to_dict() for b in Book.objects.all()]}
 
     return JsonResponse(data)
+
+
+def books(request, id):
+
+    if book := Book.objects.filter(id=id).first():
+        return JsonResponse(book.to_dict())
+
+    return JsonResponse({'error': f'Id {id} not found!'})
